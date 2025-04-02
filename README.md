@@ -49,3 +49,8 @@
 <hr>
 <h2>License</h2>
 <p>Open and read the License of the project</p>
+
+<h2>Project Setup</h2>
+'''
+
+'''
