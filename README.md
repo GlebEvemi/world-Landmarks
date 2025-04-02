@@ -38,3 +38,5 @@
 <li>authentication via JWT</li>
 <li>Users can edit and delete only their own data (photos, landmarks, ratings)</li>
 <hr>
+<h2>License</h2>
+<p>Open and read the License of the project</p>
