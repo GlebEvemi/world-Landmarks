@@ -2,6 +2,10 @@
 <hr>
 <p>Web application for manipulating data about world landmarks</p>
 <hr>
+<h2>Technologies</h2>
+<li>Python</li>
+<li>Flask</li>
+<li>SQLAlchemy</li>
 <h2>Basic functionality</h2>
 <h3>Users</h3>
 <li>Registering a new user</li>
