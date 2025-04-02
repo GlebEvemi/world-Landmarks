@@ -6,6 +6,11 @@
 <li>Python</li>
 <li>Flask</li>
 <li>SQLAlchemy</li>
+<li>Flask-JWT-Extended</li>
+<li>Flask-RESTful</li>
+<li>Werkzeug</li>
+
+
 <h2>Basic functionality</h2>
 <h3>Users</h3>
 <li>Registering a new user</li>
