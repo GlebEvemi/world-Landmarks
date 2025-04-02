@@ -51,11 +51,13 @@
 <p>Open and read the License of the project</p>
 
 <h2>Project Setup</h2>
+
 ```
 pip install -r requirements.txt
 ```
 
 <h2>Run</h2>
+
 ```
 flask --app main run
 ```
