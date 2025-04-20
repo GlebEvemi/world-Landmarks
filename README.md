@@ -15,7 +15,7 @@
 <h3>Users</h3>
 <li>Registering a new user</li>
 <li>User Authentication (JWT)</li>
-<li>Получение информации о пользователе</li>
+<li>Getting user information</li>
 <hr>
 <h3>Landmarks</h3>
 <li>Creating a new landmark (available only to registered users)</li>
