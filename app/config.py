@@ -2,7 +2,7 @@ from os import environ
 from dotenv import load_dotenv
 
 load_dotenv()
-
+print("Loading config...")
 class Config:
     DEBUG = True
     TESTING = False
