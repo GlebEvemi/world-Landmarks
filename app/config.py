@@ -1,11 +1,11 @@
-import os
+from os import environ
 
 
 class Config:
     DEBUG = True
     TESTING = False
     SECRET_KEY = "VeryVerySecretKey"
-    SQLALCHEMY_DATABASE_URI = "mysql://root:@localhost/db_landmarks"
+    SQLALCHEMY_DATABASE_URI = f"mysql://{environ['DB_USER']}:{environ['DB_PASSWORD']}@{environ['DB_HOST']}/{environ['DATABASE']}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     AUTH_TOKEN_EXPIRATION_DAYS = 30
     AUTH_TOKEN_EXPIRATION_SECONDS = 0
