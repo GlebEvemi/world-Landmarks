@@ -16,5 +16,11 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User(id={self.id},username={self.username})"
-
-
+    
+    def to_dict(self):
+        return {
+        "id": self.id,
+        "username": self.username,
+        "email": self.email,
+        "created_on": self.created_on.isoformat(),
+    }
