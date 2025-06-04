@@ -1,0 +1,56 @@
+swagger: "2.0"
+info:
+  title: User Registration API
+  description: API for user registration with JWT access token response
+  version: "1.0"
+paths:
+  /user/register:
+    post:
+      summary: Create a new user and return access token
+      description: >
+        This endpoint allows a user to register by providing a username, email, and password.
+        A short-lived access token is returned on success.
+      tags:
+        - Authentication
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            type: object
+            required:
+              - username
+              - email
+              - password
+            properties:
+              username:
+                type: string
+                example: johndoe
+              email:
+                type: string
+                format: email
+                example: johndoe@example.com
+              password:
+                type: string
+                format: password
+                example: strongpassword123
+      responses:
+        200:
+          description: User registered successfully
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 1
+              username:
+                type: string
+                example: johndoe
+              email:
+                type: string
+                example: johndoe@example.com
+              access_token:
+                type: string
+                example: eyJ0eXAiOiJKV1QiLCJhbGciOi...
+        400:
+          description: Invalid input or user already exists

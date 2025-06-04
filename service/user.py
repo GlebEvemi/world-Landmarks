@@ -1,4 +1,4 @@
-from bcrypt import hashpw, checkpw
+from bcrypt import hashpw, checkpw, gensalt
 from models.User import User
 from datetime import datetime
 from app import db
@@ -16,8 +16,12 @@ def create_user(username: str, email: str, password: str) -> User:
     if existing:
         raise ValueError("User with this email already exists.")
     bpwd = str_to_bytes(password) 
-    bsalt = str_to_bytes(username+email)
+    bsalt = gensalt()
     usr = User(username, email, hashpw(bpwd, bsalt).decode(), datetime.now())
     db.session.add(usr)
     db.session.commit()
     return usr
+
+
+def login_user(username: str, email: str, password: str) -> User:
+    ...
