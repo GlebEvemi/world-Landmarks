@@ -13,8 +13,8 @@ def authorized(f):
 
             if not user:
                 raise ValueError("User not found")
-
-            return f(user)
+            kwargs["user"] = user
+            return f(args, kwargs)
         except Exception as e: 
             print(e)
             return {

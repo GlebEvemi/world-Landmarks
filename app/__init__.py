@@ -11,6 +11,6 @@ pymysql.install_as_MySQLdb()
 
 app = Flask(__name__)
 app.config.from_object(Config())
-db = SQLAlchemy(app)
+db: SQLAlchemy = SQLAlchemy(app)
 jwt = JWTManager(app)
 swagger = Swagger(app, template_file="apispec.yaml")
