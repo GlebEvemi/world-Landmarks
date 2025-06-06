@@ -3,6 +3,13 @@ info:
   title: User Registration API
   description: API for user registration with JWT access token response
   version: "1.0"
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: >
+      JWT access token. Format: **Bearer &lt;token&gt>**
 paths:
   /user/register:
     post:
@@ -54,3 +61,81 @@ paths:
                 example: eyJ0eXAiOiJKV1QiLCJhbGciOi...
         400:
           description: Invalid input or user already exists
+  /user/login:
+    post:
+      summary: User login
+      description: Authenticates a user using either a username or email and a password.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: User login and password
+          required: true
+          schema:
+            type: object
+            required:
+              - login
+              - password
+            properties:
+              login:
+                type: string
+                description: Username or email of the user
+                example: user@example.com
+              password:
+                type: string
+                description: User's password
+                example: supersecret
+      responses:
+        200:
+          description: Successful login
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Login successful
+              token:
+                type: string
+                example: eyJhbGciOiJIUzI1...
+        400:
+          description: Validation error or invalid credentials
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Invalid credentials
+  /user/me:
+      get:
+        summary: Get current user
+        description: Returns information about the currently authenticated user.
+        produces:
+          - application/json
+        security:
+          - BearerAuth: []
+        responses:
+          200:
+            description: User info successfully retrieved
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                email:
+                  type: string
+                  example: johndoe@example.com
+                username:
+                  type: string
+                  example: johndoe
+          401:
+            description: Unauthorized — missing or invalid token
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: Missing Authorization Header
