@@ -83,11 +83,11 @@ paths:
               login:
                 type: string
                 description: Username or email of the user
-                example: user@example.com
+                example: johndoe@example.com
               password:
                 type: string
                 description: User's password
-                example: supersecret
+                example: strongpassword123
       responses:
         200:
           description: Successful login
@@ -139,3 +139,204 @@ paths:
                 error:
                   type: string
                   example: Missing Authorization Header
+  /landmark:
+    post:
+      summary: Create a landmark
+      description: Creates a new landmark associated with the authenticated user.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - location
+              - country
+            properties:
+              name:
+                type: string
+                example: Eiffel Tower
+              description:
+                type: string
+                example: Iconic iron tower in Paris
+              location:
+                type: string
+                example: Paris, France
+              country:
+                type: string
+                example: France
+      responses:
+        200:
+          description: Landmark successfully created
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+              location:
+                type: string
+              country:
+                type: string
+        400:
+          description: Error during creation
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Invalid input
+    get:
+      summary: List all landmarks
+      description: Returns a list of all landmarks for the authenticated user.
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: List of landmarks
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Eiffel Tower
+                country:
+                  type: string
+                  example: France
+        400:
+          description: Failed to retrieve landmarks
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Unexpected error occurred
+  /landmark/{id}:
+    put:
+      summary: Update a landmark (unimplemented)
+      description: Updates a specific landmark. Currently not implemented.
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID of the landmark
+        - in: body
+          name: body
+          required: true
+          schema:
+            type: object
+            required:
+              - name
+              - location
+              - country
+            properties:
+              name:
+                type: string
+                example: Eiffel Tower
+              description:
+                type: string
+                example: Iconic iron tower in Paris
+              location:
+                type: string
+                example: Paris, France
+              country:
+                type: string
+                example: France
+
+      responses:
+        501:
+          description: Not implemented
+    get:
+      summary: Get a landmark by ID
+      description: Returns full details of a single landmark. Requires authentication.
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID of the landmark to retrieve
+      responses:
+        200:
+          description: Landmark data successfully returned
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                example: 3
+              name:
+                type: string
+                example: Statue of Liberty
+              description:
+                type: string
+                example: A colossal neoclassical sculpture on Liberty Island
+              location:
+                type: string
+                example: New York Harbor
+              country:
+                type: string
+                example: USA
+        400:
+          description: Error occurred
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Landmark not found
+    delete:
+      summary: Delete a landmark
+      description: Deletes a landmark belonging to the authenticated user.
+      produces:
+        - application/json
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID of the landmark to delete
+      responses:
+        200:
+          description: Landmark successfully deleted
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Successfully deleted the landmark.
+        400:
+          description: Error during deletion
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Landmark not found

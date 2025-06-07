@@ -63,3 +63,22 @@ def update_landmark(
     db.session.commit()
     
     return lm
+
+
+def list_landmarks(sort_by=None, country_filter=None) -> list[Landmark]:
+    if not sort_by:
+        sort_by = Landmark.id
+
+    query = Landmark.query
+
+    if country_filter:
+        query = query.filter(Landmark.country == f"%{country_filter}%")
+
+    if sort_by:
+        query = query.order_by(sort_by)
+
+    return query.all()
+
+
+def get_landmark_by_id(id: int) -> Landmark:
+    return Landmark.query.filter_by(id=id).first()
