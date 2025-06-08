@@ -1,3 +1,4 @@
+from sqlalchemy.engine import url
 from app import db
 
 class Photo(db.Model):
@@ -11,5 +12,9 @@ class Photo(db.Model):
         self.user_id = user_id,
         self.landmark_id = landmark_id        
 
-    def __repr__(self):
-        return f"Photo lol"
+    
+    def to_dict(self, host: str):
+        return {
+            "url": f"{host}{self.url}",
+            "id": self.id
+        }

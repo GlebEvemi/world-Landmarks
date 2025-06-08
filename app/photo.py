@@ -4,11 +4,14 @@ from models.User import User
 from models.Landmark import Landmark
 from service import landmark
 from service.landmark import create_landmark, delete_landmark, get_landmark_by_id, list_landmarks, update_landmark
-from flask import jsonify
+from flask import jsonify, send_from_directory
 from flask import request
 from werkzeug.utils import secure_filename
+import os
+from service.photo import create_photo, get_landmark_photos
 
-from service.photo import create_photo
+
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 
 
 @app.route("/landmark/<int:landmark_id>/photo", methods=["POST"])
@@ -34,12 +37,24 @@ def upload_photo(landmark_id: int, user: User):
     }), 200
 
 
-@app.route("/landmark/<int:landmark_id>/photo", methods=["POST"])
+@app.route("/landmark/<int:landmark_id>/photo", methods=["DELETE"])
 @authorized
 def delete_photo(landmark_id: int, user: User):
     return "Unimplemented", 500
 
 
-@app.route("/landmark/<int:landmark_id>/photo", methods=["POST"])
+@app.route("/landmark/<int:landmark_id>/photo", methods=["GET"])
 def list_photos(landmark_id: int):
-    return "Unimplemented", 500
+    try:
+        photos = get_landmark_photos(landmark_id)
+
+        return jsonify(list(p.to_dict(request.host_url) for p in photos)), 200 
+    except:
+        return jsonify({
+            "error": "Landmark not found."
+        }), 404
+
+
+@app.route("/uploads/<filename>")
+def get_photo(filename):
+    return send_from_directory(UPLOAD_FOLDER, filename)

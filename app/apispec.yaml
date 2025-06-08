@@ -382,3 +382,40 @@ paths:
               error:
                 type: string
                 example: Invalid file
+    get:
+      summary: List photos of a landmark
+      description: Returns a list of photos associated with the specified landmark.
+      produces:
+        - application/json
+      parameters:
+        - name: id 
+          in: path
+          required: true
+          type: integer
+          description: ID of the landmark
+      responses:
+        200:
+          description: A list of photo metadata
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 42
+                url:
+                  type: string
+                  example: https://localhost:5000/uploads/landmark_42_photo_1.jpg
+                uploaded_at:
+                  type: string
+                  format: date-time
+                  example: 2025-06-01T12:34:56Z
+        404:
+          description: Landmark not found
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Landmark not found.
