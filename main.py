@@ -2,6 +2,7 @@ from app import app, db
 from models import Landmark, User, Rating, Photo
 import app.user
 import app.landmark
+import app.photo
 import pymysql
 from flask_swagger_ui import get_swaggerui_blueprint
 pymysql.install_as_MySQLdb()

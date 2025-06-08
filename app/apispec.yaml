@@ -340,3 +340,45 @@ paths:
               error:
                 type: string
                 example: Landmark not found
+  /landmark/{id}/photo:
+    post:
+      summary: Upload a photo
+      description: Accepts an image file and stores it.
+      security:
+        - BearerAuth: []
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: ID of the landmark
+
+        - in: formData
+          name: file
+          type: file
+          required: true
+          description: The image file to upload
+      responses:
+        200:
+          description: Photo uploaded successfully
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Photo uploaded
+              filename:
+                type: string
+                example: uploaded_123.jpg
+        400:
+          description: Upload failed
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                example: Invalid file

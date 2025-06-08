@@ -8,6 +8,8 @@ from flask import jsonify
 from flask import request
 from werkzeug.utils import secure_filename
 
+from service.photo import create_photo
+
 
 @app.route("/landmark/<int:landmark_id>/photo", methods=["POST"])
 @authorized
@@ -17,11 +19,19 @@ def upload_photo(landmark_id: int, user: User):
 
     file = request.files['file']
 
-    if file.filename == '':
+    if not file.filename:
         return jsonify({"error": "No selected file"}), 400
     filename = secure_filename(file.filename)
-
-    return "Unimplemented", 500
+    create_photo(
+        landmark_id=landmark_id, 
+        user=user,
+        filename=filename,
+        photo=file,
+    )
+    return jsonify({
+        "filename": filename,
+        "message": "Photo uploaded",
+    }), 200
 
 
 @app.route("/landmark/<int:landmark_id>/photo", methods=["POST"])

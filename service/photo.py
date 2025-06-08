@@ -26,5 +26,6 @@ def create_photo(
         raise ValueError("Landmark not found")
     
     p = Photo(os.path.join("uploads", filename), user.id, lm.id)
-    
+    db.session.add(p)
+    db.session.commit()
     photo.save(p.url)
