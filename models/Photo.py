@@ -2,7 +2,7 @@ from app import db
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    url = db.Column(db.String(80), unique=True, nullable = False)
+    url = db.Column(db.String(256), nullable = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     landmark_id = db.Column(db.Integer, db.ForeignKey('landmark.id'))
 
