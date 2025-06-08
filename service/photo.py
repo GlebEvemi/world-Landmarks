@@ -5,7 +5,6 @@ from models.Landmark import Landmark
 from models.Photo import Photo
 from models.User import User
 from app import db
-from service.landmark import get_landmark_by_id
 
 
 def create_photo(
