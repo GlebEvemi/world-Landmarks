@@ -14,17 +14,15 @@ class Landmark(db.Model):
         self.location = location
         self.country = country
         self.user_id = user_id
-        
-    
+ 
     def to_dict(self):
         return {
             "id": self.id,
             "name": self.name,
             "description": self.description,
             "country": self.country,
-            "user_id": self.user_id
+            "userId": self.user_id
         }
-    
 
     def to_dict_summary(self):
         return {

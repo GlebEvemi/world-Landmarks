@@ -1,9 +1,6 @@
 from app import app
 from app.middlewares.authorize import authorized
 from models.User import User
-from models.Landmark import Landmark
-from service import landmark
-from service.landmark import create_landmark, delete_landmark, get_landmark_by_id, list_landmarks, update_landmark
 from flask import jsonify, send_from_directory
 from flask import request
 from werkzeug.utils import secure_filename

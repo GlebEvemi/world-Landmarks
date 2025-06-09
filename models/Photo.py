@@ -10,9 +10,8 @@ class Photo(db.Model):
     def __init__(self, url, user_id, landmark_id):
         self.url = url, 
         self.user_id = user_id,
-        self.landmark_id = landmark_id        
+        self.landmark_id = landmark_id
 
-    
     def to_dict(self, host: str):
         return {
             "url": f"{host}{self.url}",
