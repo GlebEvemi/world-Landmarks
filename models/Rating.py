@@ -20,7 +20,7 @@ class Rating(db.Model):
 
 
     def to_dict(self):
-        user: User = User.query.filter_by(id=self.user_id)
+        user: User = User.query.filter_by(id=self.user_id).first()
 
         return {
             "id": self.id,

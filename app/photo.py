@@ -5,7 +5,7 @@ from flask import jsonify, send_from_directory
 from flask import request
 from werkzeug.utils import secure_filename
 import os
-from service.photo import create_photo, get_landmark_photos
+from service.photo import create_photo, delete_photo, get_landmark_photos
 
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
@@ -36,8 +36,15 @@ def upload_photo(landmark_id: int, user: User):
 
 @app.route("/landmark/<int:landmark_id>/photo", methods=["DELETE"])
 @authorized
-def delete_photo(landmark_id: int, user: User):
-    return "Unimplemented", 500
+def d_photo(landmark_id: int, user: User):
+    try:
+        photos = delete_photo(l)
+
+        return jsonify(list(p.to_dict(request.host_url) for p in photos)), 200 
+    except:
+        return jsonify({
+            "error": "Landmark not found."
+        }), 404
 
 
 @app.route("/landmark/<int:landmark_id>/photo", methods=["GET"])

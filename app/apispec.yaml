@@ -197,12 +197,24 @@ paths:
                 type: string
                 example: Invalid input
     get:
-      summary: List all landmarks
-      description: Returns a list of all landmarks for the authenticated user.
+      summary: Get list of landmarks
+      description: Returns a list of landmarks. Supports optional filtering by country (wildcard) and sorting by `name` or `country`.
       produces:
         - application/json
-      security:
-        - BearerAuth: []
+      parameters:
+        - name: country
+          in: query
+          type: string
+          required: false
+          description: Country name to filter landmarks (supports wildcard)
+          example: Fra
+        - name: sort
+          in: query
+          type: string
+          required: false
+          enum: [name, country]
+          description: Field to sort the results by
+          example: name
       responses:
         200:
           description: List of landmarks
@@ -213,25 +225,52 @@ paths:
               properties:
                 id:
                   type: integer
-                  example: 1
                 name:
                   type: string
-                  example: Eiffel Tower
                 country:
                   type: string
-                  example: France
         400:
-          description: Failed to retrieve landmarks
+          description: Error retrieving landmarks
+  /landmark/{id}:
+    get:
+      summary: Get a landmark by ID
+      description: Returns detailed information about a landmark with the given ID.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Unique ID of the landmark
+          example: 42
+      responses:
+        200:
+          description: Landmark found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              description:
+                type: string
+              location:
+                type: string
+              country:
+                type: string
+        404:
+          description: Landmark not found
           schema:
             type: object
             properties:
               error:
                 type: string
-                example: Unexpected error occurred
-  /landmark/{id}:
+                example: Not found
     put:
-      summary: Update a landmark (unimplemented)
-      description: Updates a specific landmark. Currently not implemented.
+      summary: Update a landmark
+      description: Updates a specific landmark.
       produces:
         - application/json
       security:
@@ -419,3 +458,120 @@ paths:
               error:
                 type: string
                 example: Landmark not found.
+  /landmark/{id}/rating:
+    get:
+      summary: Get landmark ratings
+      description: Returns average rating and all user comments for the given landmark.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Landmark ID
+      responses:
+        200:
+          description: Ratings retrieved successfully
+          schema:
+            type: object
+            properties:
+              averageRating:
+                type: number
+                format: float
+              comments:
+                type: array
+                items:
+                  type: object
+        400:
+          description: Error fetching ratings
+    post:
+      summary: Create rating
+      description: Add a new rating and comment for the given landmark by the authorized user.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Landmark ID
+        - in: body
+          name: rating
+          required: true
+          schema:
+            type: object
+            required:
+              - mark
+              - comment
+            properties:
+              mark:
+                type: integer
+                example: 4
+              comment:
+                type: string
+                example: "Beautiful view!"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Rating created successfully
+        400:
+          description: Error creating rating
+  /rating/{id}:
+    put:
+      summary: Update rating
+      description: Update a previously submitted rating and comment.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Rating ID
+        - in: body
+          name: rating
+          required: true
+          schema:
+            type: object
+            required:
+              - mark
+              - comment
+            properties:
+              mark:
+                type: integer
+                example: 5
+              comment:
+                type: string
+                example: "Updated comment"
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Rating updated successfully
+        400:
+          description: Error updating rating
+
+    delete:
+      summary: Delete rating
+      description: Delete a previously submitted rating by the authorized user.
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: integer
+          description: Rating ID
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Rating deleted successfully
+        400:
+          description: Error deleting rating

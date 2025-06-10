@@ -21,11 +21,12 @@ class Landmark(db.Model):
             "name": self.name,
             "description": self.description,
             "country": self.country,
-            "userId": self.user_id
+            "user_id": self.user_id
         }
 
     def to_dict_summary(self):
         return {
         "id": self.id,
+        "country": self.country,
         "name": self.name,
     }

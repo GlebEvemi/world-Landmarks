@@ -1,6 +1,7 @@
 from app import app, db
 from models import Landmark, User, Rating, Photo
 import app.user
+import app.rating
 import app.landmark
 import app.photo
 import pymysql

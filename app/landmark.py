@@ -74,8 +74,7 @@ def d_landmark(id: int, user: User):
 
 
 @app.route("/landmark", methods=["GET"])
-@authorized
-def get_landmarks(user: User):
+def get_landmarks():
     try:
         country = request.args.get("country")
         sort = request.args.get("sort")
@@ -96,8 +95,7 @@ def get_landmarks(user: User):
 
 
 @app.route("/landmark/<int:id>", methods=["GET"])
-@authorized
-def get_landmark(id: int, user: User):
+def get_landmark(id: int):
     try:
         with app.app_context():
             landmark = get_landmark_by_id(id)

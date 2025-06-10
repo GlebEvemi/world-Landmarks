@@ -30,7 +30,10 @@ def delete_landmark(user: User, id: int):
     if not user:
         raise ValueError("Unauthorized")
 
-    lm = Landmark.query.filter_by(id=id).first()
+    lm: Landmark = Landmark.query.filter(and_(
+        Landmark.id == id,
+        Landmark.user_id == user.id
+    )).first()
     if not lm:
         raise ValueError("Landmark not found")
     db.session.delete(lm)
@@ -72,7 +75,7 @@ def list_landmarks(sort_by=None, country_filter=None) -> list[Landmark]:
     query = Landmark.query
 
     if country_filter:
-        query = query.filter(Landmark.country == f"%{country_filter}%")
+        query = query.filter(Landmark.country.like(f"%{country_filter}%"))
 
     if sort_by:
         query = query.order_by(sort_by)

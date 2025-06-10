@@ -22,7 +22,7 @@ def delete_rating(user: User, rating_id: int):
     rating: Rating = Rating.query.filter(and_(
         Rating.id == rating_id,
         Rating.user_id == user.id
-    ))
+    )).first()
 
     if not rating:
         raise ValueError("Rating not found")
@@ -37,7 +37,7 @@ def update_rating(user: User, rating_id: int, mark: int, comment: str):
     rating: Rating = Rating.query.filter(and_(
         Rating.id == rating_id,
         Rating.user_id == user.id
-    ))
+    )).first()
     
     if not rating:
         raise ValueError("Rating not found")

@@ -1,12 +1,9 @@
 from app import app
 from app.middlewares.authorize import authorized
 from models.User import User
-from flask import jsonify, send_from_directory
+from flask import jsonify
 from flask import request
-from werkzeug.utils import secure_filename
-import os
-from service.rating import create_rating, delete_rating, get_average_rating, list_ratings, ratin, update_rating
-from service.photo import create_photo, get_landmark_photos
+from service.rating import create_rating, delete_rating, get_average_rating, list_ratings, update_rating
 
 
 @app.route("/landmark/<int:id>/rating")
@@ -17,8 +14,8 @@ def get_rating(id: int):
         ratings = list_ratings(id) 
 
         return jsonify({
-            "comments": list(r.to_dict for r in ratings),
-            "averageRating": rating
+            "comments": list(r.to_dict() for r in ratings),
+            "average_rating": rating
         }), 200
     except Exception as e:
         return jsonify({
@@ -36,15 +33,15 @@ def cr_rating(id: int, user: User):
 
         rating = create_rating(user, id, mark, comment)
         return jsonify(rating.to_dict()), 200 
-    except Exception as e:
+    except: 
         return jsonify({
-            "error": e.__str__()
+            "error": "The rating was not created." 
         }), 400
 
 
 @app.route("/rating/<int:id>", methods=["PUT"])
 @authorized
-def cr_rating(id: int, user: User):
+def u_rating(id: int, user: User):
     data = request.get_json()
     try:
         mark = data.get("mark")

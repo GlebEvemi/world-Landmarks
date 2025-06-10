@@ -22,5 +22,5 @@ class User(db.Model):
         "id": self.id,
         "username": self.username,
         "email": self.email,
-        "createdOn": self.created_on.isoformat(),
+        "created_on": self.created_on.isoformat(),
     }
