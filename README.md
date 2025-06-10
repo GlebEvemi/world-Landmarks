@@ -12,7 +12,9 @@ Web application for manipulating data about world landmarks
 - SQLAlchemy  
 - Flask-JWT-Extended  
 - Flask-RESTful  
-- Werkzeug  
+- Werkzeug 
+
+(Refer requirements.txt for the rest)
 
 ## Basic functionality
 
@@ -56,13 +58,6 @@ Web application for manipulating data about world landmarks
 
 ---
 
-### Endpoint
-
--  
--  
-**Work in Progress**  
-
----
 
 ### Security
 
@@ -82,8 +77,17 @@ Open and read the License of the project
 pip install -r requirements.txt
 ```
 
+Copy .env.example to .env and configure it
+
 ## Run
 
+```bash
+python main.py
+```
+```
+```
+
+# Endpoints
 
 ## Authentication
 | Method | Endpoint                | Description                                                       | Auth Required |
