@@ -102,11 +102,15 @@ pip install -r requirements.txt
 | DELETE | `/landmark/{id}`        | Delete a landmark                                                 | Owner             |
 
 ## Landmark Photos
+| Method | Endpoint                | Description                                                       | Auth Required |
+| ------ | ----------------------- | ----------------------------------------------------------------- | ------------- |
 | POST   | `/landmark/{id}/photo`  | Upload a photo for the specified landmark                         | Authorized user |
 | GET    | `/landmark/{id}/photo`  | Get a list of photos for the specified landmark                   | Open             |
 | DELETE | `/photo/{id}`           | Delete a photo by its ID                                          | Owner             |
 
 ## Rating 
+| Method | Endpoint                | Description                                                       | Auth Required |
+| ------ | ----------------------- | ----------------------------------------------------------------- | ------------- |
 | GET    | `/landmark/{id}/rating` | Get average rating and comments for the specified landmark        | Open             |
 | POST   | `/landmark/{id}/rating` | Add a new rating and comment for a landmark                       | Authorized user |
 | PUT    | `/rating/{id}`          | Update a rating and comment                                       | Owner             |
