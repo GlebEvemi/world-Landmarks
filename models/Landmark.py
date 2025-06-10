@@ -7,6 +7,7 @@ class Landmark(db.Model):
     location = db.Column(db.String(256), nullable=False)
     country = db.Column(db.String(256), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    average_rating = db.Column(db.Float)
 
     def __init__(self, name, description, location, country, user_id):
         self.name = name
@@ -29,4 +30,5 @@ class Landmark(db.Model):
         "id": self.id,
         "country": self.country,
         "name": self.name,
+        "rating": self.average_rating,
     }

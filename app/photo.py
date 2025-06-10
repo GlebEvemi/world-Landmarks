@@ -34,16 +34,18 @@ def upload_photo(landmark_id: int, user: User):
     }), 200
 
 
-@app.route("/landmark/<int:landmark_id>/photo", methods=["DELETE"])
+@app.route("/photo/<int:id>", methods=["DELETE"])
 @authorized
-def d_photo(landmark_id: int, user: User):
+def d_photo(id: int, user: User):
     try:
-        photos = delete_photo(l)
+        delete_photo(id, user)
 
-        return jsonify(list(p.to_dict(request.host_url) for p in photos)), 200 
+        return jsonify({
+            "message": "Successfully deleted a photo"
+        }), 200 
     except:
         return jsonify({
-            "error": "Landmark not found."
+            "error": "Could not delete a photo"
         }), 404
 
 

@@ -212,7 +212,7 @@ paths:
           in: query
           type: string
           required: false
-          enum: [name, country]
+          enum: [name, country, rating]
           description: Field to sort the results by
           example: name
       responses:
@@ -575,3 +575,46 @@ paths:
           description: Rating deleted successfully
         400:
           description: Error deleting rating
+
+  /photo/{id}:
+    delete:
+        summary: Delete a photo for a landmark
+        description: Deletes a photo by its ID if the user is authorized.
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        security:
+          - BearerAuth: []
+        parameters:
+          - name: id
+            in: path
+            required: true
+            type: integer
+            description: ID of the photo to delete
+        responses:
+          200:
+            description: Photo deleted successfully
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Successfully deleted a photo
+          404:
+            description: Photo not found or deletion failed
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: Could not delete a photo
+          403:
+            description: Unauthorized
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: Forbidden
+

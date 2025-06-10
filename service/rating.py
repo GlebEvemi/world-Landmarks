@@ -9,6 +9,8 @@ from app import db
 from sqlalchemy import func
 from numpy import clip
 
+from service.landmark import get_landmark_by_id
+
 def create_rating(user: User, landmark_id: int, mark: int, comment: str):
     mark = clip(mark, 1, 5)
     rating = Rating(mark, user.id, landmark_id, comment)
@@ -52,8 +54,16 @@ def get_average_rating(landmark_id: int):
     result = db.session.query(func.avg(Rating.rating))\
         .filter(Rating.landmark_id == landmark_id)\
         .scalar()
+    lm = get_landmark_by_id(landmark_id)
 
-    return float(result) if result is not None else 0.0
+    if not lm:
+        raise ValueError("Landmark not found")
+    avg_rating = float(result) if result is not None else 0.0 
+    lm.average_rating = avg_rating
+    
+    db.session.commit()
+
+    return avg_rating
 
 def list_ratings(landmark_id: int) -> list[Rating]:
     ratings = Rating.query.filter_by(landmark_id=landmark_id).all()

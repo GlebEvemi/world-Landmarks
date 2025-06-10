@@ -31,25 +31,22 @@ def create_photo(
 
 
 def delete_photo(
-    landmark_id: int,
     photo_id: int,
     user: User,
 ):
     if not user:
         raise ValueError("Unauthorized")
 
-    lm: Landmark = Landmark.query.filter(and_(
-        Landmark.id == landmark_id,
-        Landmark.user_id == user.id
-    )).first()
-
-    if not lm:
-        raise ValueError("Landmark not found")
     photo: Photo = Photo.query.filter(and_(
         Photo.id == photo_id,
         Photo.user_id == user.id,
     )).first()
-    os.remove(os.path.join("uploads",))
+
+    if not photo:
+        raise ValueError("Photo not found")
+
+    print(f"Deleting {photo.url}")
+    os.remove(photo.url)
 
     db.session.delete(photo)
     db.session.commit()

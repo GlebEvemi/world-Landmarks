@@ -84,6 +84,8 @@ def get_landmarks():
                 sort = Landmark.name
             case "country":
                 sort = Landmark.country
+            case "rating":
+                sort = Landmark.average_rating
 
         with app.app_context():
             landmarks = list_landmarks(sort_by=sort, country_filter=country)
