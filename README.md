@@ -108,6 +108,6 @@ pip install -r requirements.txt
 
 ## Rating 
 | GET    | `/landmark/{id}/rating` | Get average rating and comments for the specified landmark        | Open             |
-| POST   | `/landmark/{id}/rating` | Add a new rating and comment for a landmark                       | Authorized user             |
+| POST   | `/landmark/{id}/rating` | Add a new rating and comment for a landmark                       | Authorized user |
 | PUT    | `/rating/{id}`          | Update a rating and comment                                       | Owner             |
 | DELETE | `/rating/{id}`          | Delete a rating                                                   | Owner             |
